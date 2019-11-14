@@ -3,10 +3,14 @@
 
 int main()
 {
-    //take maxsize as console input
-    printf("Enter the value of maxsize: ");
+    //take console input
     int maxsize;
+    char partition;
+    printf("Enter the value of maxsize: ");
     scanf("%d", &maxsize);
+    scanf("%c", &partition);
+    printf("Partition? (y/n): ");
+    scanf("%c", &partition);
 
     //initialize the room with zeros
     double cube[maxsize][maxsize][maxsize];
@@ -17,6 +21,18 @@ int main()
             for(int k = 0; k < maxsize; k++)
             {
                 cube[i][j][k] = 0.0;
+            }
+        }
+    }
+
+    //create partition
+    if(partition == 'y')
+    {
+        for(int i = 0; i < maxsize; i++)
+        {
+            for(int j = (int) (maxsize*0.25); j < maxsize; j++)
+            {
+                    cube[i][j][(int) (maxsize*0.5)] = -555.0;
             }
         }
     }
@@ -47,47 +63,71 @@ int main()
             {
                 for(int k = 0; k < maxsize; k++)
                 {
+                    //check if partition
+                    if(cube[i][j][k] == -555.0)
+                    {
+                        continue;
+                    }
+
                     //repeat this for each cell face
                     if(0 <= k-1 && k-1 < maxsize)
                     {
-                        change = (cube[i][j][k] - cube[i][j][k-1])*dTerm;
-                        cube[i][j][k] -= change;
-                        cube[i][j][k-1] += change;
+                        if(cube[i][j][k-1] != -555.0)
+                        {
+                            change = (cube[i][j][k] - cube[i][j][k-1])*dTerm;
+                            cube[i][j][k] -= change;
+                            cube[i][j][k-1] += change;
+                        }
                     }
 
                     if(0 <= k+1 && k+1 < maxsize)
                     {
-                        change = (cube[i][j][k] - cube[i][j][k+1])*dTerm;
-                        cube[i][j][k] -= change;
-                        cube[i][j][k+1] += change;
+                        if(cube[i][j][k+1] != -555.0)
+                        {
+                            change = (cube[i][j][k] - cube[i][j][k+1])*dTerm;
+                            cube[i][j][k] -= change;
+                            cube[i][j][k+1] += change;
+                        }
                     }
 
                     if(0 <= j-1 && j-1 < maxsize)
                     {
-                        change = (cube[i][j][k] - cube[i][j-1][k])*dTerm;
-                        cube[i][j][k] -= change;
-                        cube[i][j-1][k] += change;
+                        if(cube[i][j-1][k] != -555.0)
+                        {
+                            change = (cube[i][j][k] - cube[i][j-1][k])*dTerm;
+                            cube[i][j][k] -= change;
+                            cube[i][j-1][k] += change;
+                        }
                     }
 
                     if(0 <= j+1 && j+1 < maxsize)
                     {
-                        change = (cube[i][j][k] - cube[i][j+1][k])*dTerm;
-                        cube[i][j][k] -= change;
-                        cube[i][j+1][k] += change;
+                        if(cube[i][j+1][k] != -555.0)
+                        {
+                            change = (cube[i][j][k] - cube[i][j+1][k])*dTerm;
+                            cube[i][j][k] -= change;
+                            cube[i][j+1][k] += change;
+                        }
                     }
 
                     if(0 <= i-1 && i-1 < maxsize)
                     {
-                        change = (cube[i][j][k] - cube[i-1][j][k])*dTerm;
-                        cube[i][j][k] -= change;
-                        cube[i-1][j][k] += change;
+                        if(cube[i-1][j][k] != -555.0)
+                        {
+                            change = (cube[i][j][k] - cube[i-1][j][k])*dTerm;
+                            cube[i][j][k] -= change;
+                            cube[i-1][j][k] += change;
+                        }
                     }
 
                     if(0 <= i+1 && i+1 < maxsize)
                     {
-                        change = (cube[i][j][k] - cube[i+1][j][k])*dTerm;
-                        cube[i][j][k] -= change;
-                        cube[i+1][j][k] += change;
+                        if(cube[i+1][j][k] != -555.0)
+                        {
+                            change = (cube[i][j][k] - cube[i+1][j][k])*dTerm;
+                            cube[i][j][k] -= change;
+                            cube[i+1][j][k] += change;
+                        }
                     }
                 }
             }
@@ -104,15 +144,18 @@ int main()
             {
                 for(int k = 0; k < maxsize; k++)
                 {
-                    maxVal = fmax(maxVal, cube[i][j][k]);
-                    minVal = fmin(minVal, cube[i][j][k]);
-                    sumVal += cube[i][j][k];
+                    if(cube[i][j][k] != -555.0)
+                    {
+                        maxVal = fmax(maxVal, cube[i][j][k]);
+                        minVal = fmin(minVal, cube[i][j][k]);
+                        sumVal += cube[i][j][k];
+                    }
                 }
             }
         }
 
         ratio = minVal/maxVal;
-        printf("%f %f %E\n", time, ratio, sumVal);
+        //printf("%f %f %E\n", time, ratio, sumVal);
     }
     printf("Box equilibrated in %f seconds of simulated time\n", time);
     return 0;

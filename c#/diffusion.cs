@@ -4,19 +4,24 @@ public class diffusion
 {
     public static void Main(String[] args)
     {
-        //take maxsize as console input
+        //take console input
         Console.Write("Enter the value of maxsize: ");
         int maxsize = Int32.Parse(Console.ReadLine());
+        Console.Write("Partition? (y/n): ");
+        string partition = Console.ReadLine();
 
         //initialize the room with zeros
         double[, ,] cube = new double[maxsize, maxsize, maxsize];
-        for(int i = 0; i < maxsize; i++)
+
+
+        //create partition
+        if(partition == "y")
         {
-            for(int j = 0; j < maxsize; j++)
+            for(int i = 0; i < maxsize; i++)
             {
-                for(int k = 0; k < maxsize; k++)
+                for(int j = (int) (maxsize*0.25); j < maxsize; j++)
                 {
-                    cube[i, j, k] = 0.0;
+                    cube[i, j, (int) (maxsize*0.5)] = -555.0;
                 }
             }
         }
@@ -47,47 +52,70 @@ public class diffusion
                 {
                     for(int k = 0; k < maxsize; k++)
                     {
+                        if(cube[i, j, k] == -555.0)
+                        {
+                            continue;
+                        }
+
                         //repeat this for each cell face
                         if(0 <= k-1 && k-1 < maxsize)
                         {
-                            change = (cube[i, j, k] - cube[i, j, k-1])*dTerm;
-                            cube[i, j, k] -= change;
-                            cube[i, j, k-1] += change;
+                            if(cube[i, j, k-1] != -555.0)
+                            {
+                                change = (cube[i, j, k] - cube[i, j, k-1])*dTerm;
+                                cube[i, j, k] -= change;
+                                cube[i, j, k-1] += change;
+                            }
                         }
 
                         if(0 <= k+1 && k+1 < maxsize)
                         {
-                            change = (cube[i, j, k] - cube[i, j, k+1])*dTerm;
-                            cube[i, j, k] -= change;
-                            cube[i, j, k+1] += change;
+                            if(cube[i, j, k+1] != -555.0)
+                            {
+                                change = (cube[i, j, k] - cube[i, j, k+1])*dTerm;
+                                cube[i, j, k] -= change;
+                                cube[i, j, k+1] += change;
+                            }
                         }
 
                         if(0 <= j-1 && j-1 < maxsize)
                         {
-                            change = (cube[i, j, k] - cube[i, j-1, k])*dTerm;
-                            cube[i, j, k] -= change;
-                            cube[i, j-1, k] += change;
+                            if(cube[i, j-1, k] != -555.0)
+                            {
+                                change = (cube[i, j, k] - cube[i, j-1, k])*dTerm;
+                                cube[i, j, k] -= change;
+                                cube[i, j-1, k] += change;
+                            }
                         }
 
                         if(0 <= j+1 && j+1 < maxsize)
                         {
-                            change = (cube[i, j, k] - cube[i, j+1, k])*dTerm;
-                            cube[i, j, k] -= change;
-                            cube[i, j+1, k] += change;
+                            if(cube[i, j+1, k] != -555.0)
+                            {
+                                change = (cube[i, j, k] - cube[i, j+1, k])*dTerm;
+                                cube[i, j, k] -= change;
+                                cube[i, j+1, k] += change;
+                            }
                         }
 
                         if(0 <= i-1 && i-1 < maxsize)
                         {
-                            change = (cube[i, j, k] - cube[i-1, j, k])*dTerm;
-                            cube[i, j, k] -= change;
-                            cube[i-1, j, k] += change;
+                            if(cube[i-1, j, k] != -555.0)
+                            {
+                                change = (cube[i, j, k] - cube[i-1, j, k])*dTerm;
+                                cube[i, j, k] -= change;
+                                cube[i-1, j, k] += change;
+                            }
                         }
 
                         if(0 <= i+1 && i+1 < maxsize)
                         {
-                            change = (cube[i, j, k] - cube[i+1, j, k])*dTerm;
-                            cube[i, j, k] -= change;
-                            cube[i+1, j, k] += change;
+                            if(cube[i+1, j, k] != -555.0)
+                            {
+                                change = (cube[i, j, k] - cube[i+1, j, k])*dTerm;
+                                cube[i, j, k] -= change;
+                                cube[i+1, j, k] += change;
+                            }
                         }
                     }
                 }
@@ -104,15 +132,18 @@ public class diffusion
                 {
                     for(int k = 0; k < maxsize; k++)
                     {
-                        maxVal = Math.Max(maxVal, cube[i, j, k]);
-                        minVal = Math.Min(minVal, cube[i, j, k]);
-                        sumVal += cube[i, j, k];
+                        if(cube[i, j, k] != -555.0)
+                        {
+                            maxVal = Math.Max(maxVal, cube[i, j, k]);
+                            minVal = Math.Min(minVal, cube[i, j, k]);
+                            sumVal += cube[i, j, k];
+                        }
                     }
                 }
             }
 
             ratio = minVal/maxVal;
-            Console.WriteLine(String.Format("{0} {1} {2}", time, ratio, sumVal));
+            //Console.WriteLine(String.Format("{0} {1} {2}", time, ratio, sumVal));
         }
         Console.WriteLine(String.Format("Box equilibrated in {0} seconds of simulated time", time));
     }
