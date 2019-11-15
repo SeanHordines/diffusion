@@ -30,7 +30,7 @@ func main(){
     //create partition
     if partition == "y"{
         for i := 0; i < maxsize; i++ {
-            for j := int(float64(maxsize)*0.25); j < maxsize; j++ {
+            for j := int(float64(maxsize)*0.25) + 1; j < maxsize; j++ {
                 cube[i][j][int(float64(maxsize)*0.5)] = -555.0
             }
         }

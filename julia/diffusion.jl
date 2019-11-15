@@ -10,7 +10,7 @@ cube = zeros(maxsize, maxsize, maxsize)
 #create partition
 if partition == "y"
     for i = 1:maxsize
-        for j = Int(floor(maxsize*0.25)):maxsize
+        for j = Int(floor(maxsize*0.25)+1):maxsize
                 cube[i, j, Int(floor(maxsize*0.5))] = -555.0;
         end
     end

@@ -10,7 +10,7 @@ cube = [[[0.0 for k in range(maxsize)] for j in range(maxsize)] for i in range(m
 #create partition
 if(partition == "y"):
     for i in range(maxsize):
-        for j in range(floor(maxsize*0.25), maxsize):
+        for j in range(ceil(maxsize*0.25), maxsize):
             cube[i][j][floor(maxsize*.5)] = -555.0
 
 

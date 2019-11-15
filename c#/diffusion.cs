@@ -17,11 +17,12 @@ public class diffusion
         //create partition
         if(partition == "y")
         {
+            int k = (int) (maxsize*0.5);
             for(int i = 0; i < maxsize; i++)
             {
-                for(int j = (int) (maxsize*0.25); j < maxsize; j++)
+                for(int j = (int) (maxsize*0.25)+1; j < maxsize; j++)
                 {
-                    cube[i, j, (int) (maxsize*0.5)] = -555.0;
+                    cube[i, j, k] = -555.0;
                 }
             }
         }

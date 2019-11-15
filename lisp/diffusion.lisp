@@ -1,7 +1,6 @@
 #!/usr/bin/sbcl --script
 
 ;take maxsize as console input
-(write-string "Enter the value of maxsize: ")
-(defvar maxsize)
+(pprint "Enter the value of maxsize: ")
 (setq maxsize (read))
-(princ maxsize)
+(write maxsize)
