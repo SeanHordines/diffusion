@@ -70,7 +70,7 @@ int main()
                     }
 
                     //repeat this for each cell face
-                    if(0 <= k-1 && k-1 < maxsize)
+                    if(0 <= k-1)
                     {
                         if(cube[i][j][k-1] != -555.0)
                         {
@@ -80,7 +80,7 @@ int main()
                         }
                     }
 
-                    if(0 <= k+1 && k+1 < maxsize)
+                    if(k+1 < maxsize)
                     {
                         if(cube[i][j][k+1] != -555.0)
                         {
@@ -90,7 +90,7 @@ int main()
                         }
                     }
 
-                    if(0 <= j-1 && j-1 < maxsize)
+                    if(0 <= j-1)
                     {
                         if(cube[i][j-1][k] != -555.0)
                         {
@@ -100,7 +100,7 @@ int main()
                         }
                     }
 
-                    if(0 <= j+1 && j+1 < maxsize)
+                    if(j+1 < maxsize)
                     {
                         if(cube[i][j+1][k] != -555.0)
                         {
@@ -110,7 +110,7 @@ int main()
                         }
                     }
 
-                    if(0 <= i-1 && i-1 < maxsize)
+                    if(0 <= i-1)
                     {
                         if(cube[i-1][j][k] != -555.0)
                         {
@@ -120,7 +120,7 @@ int main()
                         }
                     }
 
-                    if(0 <= i+1 && i+1 < maxsize)
+                    if(i+1 < maxsize)
                     {
                         if(cube[i+1][j][k] != -555.0)
                         {

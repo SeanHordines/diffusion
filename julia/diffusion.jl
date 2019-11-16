@@ -10,8 +10,8 @@ cube = zeros(maxsize, maxsize, maxsize)
 #create partition
 if partition == "y"
     for i = 1:maxsize
-        for j = Int(floor(maxsize*0.25)+1):maxsize
-                cube[i, j, Int(floor(maxsize*0.5))] = -555.0;
+        for j = Int(floor(maxsize*0.25)+2):maxsize
+                cube[i, j, Int(floor(maxsize*0.5) + 1)] = -555.0;
         end
     end
 end
@@ -43,7 +43,7 @@ while ratio <= 0.99
                 end
 
                 #repeat this for each cell face
-                if 1 <= k-1 && k-1 <= maxsize
+                if 1 <= k-1
                     if cube[i, j, k-1] != -555.0
                         change = (cube[i, j, k] - cube[i, j, k-1])*dTerm
                         cube[i, j, k] -= change
@@ -51,7 +51,7 @@ while ratio <= 0.99
                     end
                 end
 
-                if 1 <= k+1 && k+1 <= maxsize
+                if k+1 <= maxsize
                     if cube[i, j, k+1] != -555.0
                         change = (cube[i, j, k] - cube[i, j, k+1])*dTerm
                         cube[i, j, k] -= change
@@ -59,7 +59,7 @@ while ratio <= 0.99
                     end
                 end
 
-                if 1 <= j-1 && j-1 <= maxsize
+                if 1 <= j-1
                     if cube[i, j-1, k] != -555.0
                         change = (cube[i, j, k] - cube[i, j-1, k])*dTerm
                         cube[i, j, k] -= change
@@ -67,7 +67,7 @@ while ratio <= 0.99
                     end
                 end
 
-                if 1 <= j+1 && j+1 <= maxsize
+                if j+1 <= maxsize
                     if cube[i, j+1, k] != -555.0
                         change = (cube[i, j, k] - cube[i, j+1, k])*dTerm
                         cube[i, j, k] -= change
@@ -75,7 +75,7 @@ while ratio <= 0.99
                     end
                 end
 
-                if 1 <= i-1 && i-1 <= maxsize
+                if 1 <= i-1
                     if cube[i-1, j, k] != -555.0
                         change = (cube[i, j, k] - cube[i-1, j, k])*dTerm
                         cube[i, j, k] -= change
@@ -83,7 +83,7 @@ while ratio <= 0.99
                     end
                 end
 
-                if 1 <= i+1 && i+1 <= maxsize
+                if i+1 <= maxsize
                     if cube[i+1, j, k] != -555.0
                         change = (cube[i, j, k] - cube[i+1, j, k])*dTerm
                         cube[i, j, k] -= change
